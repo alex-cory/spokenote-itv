@@ -4,6 +4,7 @@ import { isAndroid } from 'react-device-detect'
 import ReactCodeInput from 'react-code-input'
 
 import Sheet from 'components/Sheet'
+import { useRouter } from 'next/router'
 
 const isAddedToHomescreen = (() => {
   const isBrowser = typeof window !== 'undefined'
@@ -18,6 +19,7 @@ export default function PhoneCodeSheet({
   onVerifyComplete,
   isOpen,
 }) {
+  const { push } = useRouter()
   const r = useRef()
   if (r?.current) {
     r?.current?.textInput?.[0]?.setAttribute('autocomplete', 'one-time-code')
@@ -49,6 +51,7 @@ export default function PhoneCodeSheet({
                 if (result) {
                   onVerifyComplete && onVerifyComplete(user)
                   close && close()
+                  push('/', '/', { shallow: true })
                 }
               }
             }}
